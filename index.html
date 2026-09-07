@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Field Report — documentation</title>
+<meta name="description" content="What Field Report reads, how to use it, what it is allowed to read and write, and what it stores.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+:root{
+  --ground:#E7ECEB; --surface:#F8FAFA; --surface-2:#EEF3F2;
+  --ink:#0D1A1B; --ink-2:#4C6061; --ink-3:#7A8D8D;
+  --rule:#C6D2D1; --rule-strong:#9DAFAE;
+  --accent:#0B6B62; --accent-soft:#D3E5E2;
+  --warn:#846512;
+  --shadow:0 1px 0 rgba(13,26,27,.05), 0 8px 24px -18px rgba(13,26,27,.5);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0A1314; --surface:#111C1D; --surface-2:#162324;
+    --ink:#DDE8E7; --ink-2:#92A6A5; --ink-3:#6A7D7D;
+    --rule:#223435; --rule-strong:#33484A;
+    --accent:#4FC3B2; --accent-soft:#12312E;
+    --warn:#D6AB4A;
+    --shadow:0 1px 0 rgba(0,0,0,.35), 0 8px 24px -18px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0A1314; --surface:#111C1D; --surface-2:#162324;
+  --ink:#DDE8E7; --ink-2:#92A6A5; --ink-3:#6A7D7D;
+  --rule:#223435; --rule-strong:#33484A;
+  --accent:#4FC3B2; --accent-soft:#12312E;
+  --warn:#D6AB4A;
+  --shadow:0 1px 0 rgba(0,0,0,.35), 0 8px 24px -18px rgba(0,0,0,.9);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-size:17px; line-height:1.62;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+.wrap{max-width:960px;margin:0 auto;padding:0 28px}
+.prose{max-width:68ch}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+h1,h2,h3{font-family:"Archivo","Helvetica Neue",Arial,sans-serif;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,4.4vw,46px);line-height:1.1;font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(21px,2.6vw,27px);font-weight:700;letter-spacing:-.01em;margin:56px 0 14px;padding-top:22px;border-top:1px solid var(--rule)}
+h3{font-size:18px;font-weight:600;margin:30px 0 8px}
+p{margin:0 0 14px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+code{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:.88em;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+
+.masthead{border-top:4px solid var(--ink);padding:34px 0 26px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.lede{font-size:19px;color:var(--ink-2);margin-top:16px;max-width:62ch}
+
+nav.toc{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:18px 22px;margin:28px 0 8px;box-shadow:var(--shadow)}
+nav.toc ol{margin:0;padding-left:20px;columns:2;column-gap:32px}
+nav.toc li{margin:3px 0;break-inside:avoid}
+@media (max-width:640px){nav.toc ol{columns:1}}
+
+ul.plain{list-style:none;padding:0;margin:0 0 14px}
+ul.plain li{padding:9px 0 9px 22px;border-bottom:1px solid var(--rule);position:relative}
+ul.plain li:last-child{border-bottom:none}
+ul.plain li::before{content:"";position:absolute;left:2px;top:19px;width:8px;height:1px;background:var(--rule-strong)}
+
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:16px 20px;margin:0 0 12px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 6px}
+.card p{margin:0 0 8px;color:var(--ink-2)}
+.card p:last-child{margin-bottom:0}
+.limit{font-size:15px;color:var(--warn);border-left:2px solid var(--warn);padding-left:12px;margin-top:10px}
+.limit b{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:2px}
+
+table{border-collapse:collapse;width:100%;font-size:15.5px;margin:0 0 14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:"Archivo",sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+td.mono{white-space:nowrap}
+.scroll{overflow-x:auto}
+
+.note{background:var(--accent-soft);border-radius:8px;padding:16px 20px;margin:18px 0}
+.note p:last-child{margin-bottom:0}
+
+footer{margin:64px 0 40px;padding-top:22px;border-top:1px solid var(--rule);color:var(--ink-3);font-size:15px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="eyebrow">Documentation · Confluence Cloud</div>
+  <h1>Field Report</h1>
+  <p class="lede">Field Report reads the values your pages already contain — page properties,
+  table columns, statuses, dates, people and labels — and turns them into one board you can
+  filter, group, total, save and share. No new macros to adopt, and nothing rewritten unless
+  you approve it page by page.</p>
+</header>
+
+<nav class="toc" aria-label="Contents">
+  <ol>
+    <li><a href="#install">Installing and finding the app</a></li>
+    <li><a href="#scan">The first scan</a></li>
+    <li><a href="#reads">What Field Report reads</a></li>
+    <li><a href="#board">Filtering, grouping and sorting</a></li>
+    <li><a href="#views">Saved views and links</a></li>
+    <li><a href="#write">Writing a field, and undoing it</a></li>
+    <li><a href="#macro">The table macro and the page card</a></li>
+    <li><a href="#export">Export</a></li>
+    <li><a href="#permissions">Permissions and data</a></li>
+    <li><a href="#privacy">Privacy policy</a></li>
+    <li><a href="#limits">Limits</a></li>
+    <li><a href="#support">Support</a></li>
+  </ol>
+</nav>
+
+<main class="prose">
+
+<h2 id="install">Installing and finding the app</h2>
+<p>Install from the Atlassian Marketplace. There is no account to create, no key to paste and
+nothing to configure: the app runs on Atlassian's own Forge platform and is ready the moment it
+is installed.</p>
+<p>After installing, open it from the left sidebar of Confluence: <b>Apps → Field Report</b>.</p>
+
+<h2 id="scan">The first scan</h2>
+<p>The first time you open the app it reads the pages you can see and records what it finds. The
+screen tells you how far it got and what it found — for example <span class="mono">20 of 39 pages
+(51%) have named fields</span> — before you have configured anything.</p>
+<p>After that the index keeps itself true on its own. Every page you create, edit, delete or
+restore is picked up as it happens, and once an hour the app compares versions and re-reads only
+the pages that moved. <b>Scan now</b>, top right, forces a full pass if you want one.</p>
+
+<h2 id="reads">What Field Report reads</h2>
+<ul class="plain">
+  <li><b>Page properties</b> — the details macro, the way most teams already record structure.</li>
+  <li><b>Tables with a header row</b> — each column becomes a field.</li>
+  <li><b>Status lozenges, dates, mentions and task items.</b></li>
+  <li><b>Labels, authors, spaces and page trees.</b></li>
+  <li><b>Links, and the text behind them</b> — including the host each link points at.</li>
+  <li><b>Typed values written in plain text</b> — versions, amounts, codes.</li>
+</ul>
+<p>Nothing has to be written in a particular way for this to work, and nothing on your pages is
+changed by reading them.</p>
+
+<h2 id="board">Filtering, grouping and sorting</h2>
+<p>Every value the app found becomes a filter with a count beside it. Tick one and the list
+narrows; tick it again and it comes back. The number at the head of the list always says how many
+pages you are looking at.</p>
+<p><b>Group by</b> puts the list under headings — by label, by link host, or by how many outgoing
+links a page has — with a count on each heading, and a total of a second field inside each group
+where that makes sense. A heading is a way back into the plain list, filtered to that group, not
+a table you get stuck in.</p>
+<p>You can sort on several columns at once, and filter by author, by space and by when a page was
+last updated.</p>
+
+<h2 id="views">Saved views and links</h2>
+<p>A view is the screen you were on, under a name: the same filters, the same grouping, the same
+sort. Save it, send the link, and your colleague opens exactly what you were looking at.</p>
+
+<h2 id="write">Writing a field, and undoing it</h2>
+<p>Field Report can also fill a field in — the same field, on many pages at once. It never does so
+without showing you the list first.</p>
+<p>On the <b>Write</b> tab you pick a field and a value. Before anything is written you get the
+list of pages that would change, with a tick on each one, and the button counts what you have
+ticked: <span class="mono">Write 12 pages</span>. Untick a page and it is left alone.</p>
+<p>Every page written gets a new version in Confluence, labelled <span class="mono">Field Report
+&lt;run&gt;</span> in the page history. A whole run can be undone from the <b>Changes</b> tab:
+each page goes back to the version it had, and the history records <span class="mono">Undo of
+Field Report &lt;run&gt;</span>. Nothing is overwritten in place and nothing is deleted.</p>
+
+<h2 id="macro">The table macro and the page card</h2>
+<p>Type <span class="mono">/Field Report</span> in a page to put a filtered table inside it. You
+choose the scope — a space, a page tree or a label — and which fields become columns. The table
+is rebuilt from the index every time the page is viewed, so it does not go stale, and it carries
+a search box and a CSV download of its own.</p>
+<p>Under the title of every page there is also a small Field Report card: what the index knows
+about this page, and a way into the board filtered to it.</p>
+
+<h2 id="export">Export</h2>
+<p><b>Export CSV</b> gives you exactly what is on screen — the same columns, the same rows, in
+the same order. The file is UTF-8 with a byte-order mark, so accented characters open correctly
+in Excel.</p>
+
+<h2 id="permissions">Permissions and data</h2>
+<p>The app runs entirely on Atlassian's Forge platform. <b>No page content, no name and no
+identifier ever leaves Atlassian.</b> There is no server of ours to send it to: the app makes no
+request to any address outside your Atlassian site, which is what the “Runs on Atlassian” badge
+on the Marketplace listing certifies.</p>
+<p>It asks Confluence for exactly these permissions, and Confluence shows you the list before you
+install:</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Permission</th><th>What it is for</th></tr></thead>
+  <tbody>
+    <tr><td class="mono">read:page</td><td>Reading the pages the index is built from</td></tr>
+    <tr><td class="mono">read:content-details</td><td>Page versions, and the names behind mentions</td></tr>
+    <tr><td class="mono">search</td><td>Finding which pages moved since the last pass</td></tr>
+    <tr><td class="mono">read:space</td><td>The list of spaces you pick a scope from</td></tr>
+    <tr><td class="mono">write:page</td><td>Writing a field you approved on the preview</td></tr>
+    <tr><td class="mono">write:content</td><td>Restoring a version when you undo a run</td></tr>
+    <tr><td class="mono">read:confluence-content.summary · write:confluence-content</td>
+        <td>Required by Confluence to subscribe to page events; they add no power beyond the rows above</td></tr>
+  </tbody>
+</table>
+</div>
+<p>There is no permission to delete anything — not a page, not an attachment, not a space. That
+is not a promise, it is a list you can check yourself at install time.</p>
+<p>Everything the app does, it does as you: it can never show you a value from a page you could
+not open yourself in Confluence.</p>
+
+<h2 id="privacy">Privacy policy</h2>
+<p><b>Nothing you have in Confluence leaves Atlassian.</b> The app runs on Atlassian Forge. It
+makes no request to any host outside your Atlassian site, so there is no third party, no
+analytics service and no server of ours that could receive your data. This is enforced by the
+platform, not by our good intentions: a Forge app that egresses data must declare it, and this
+one declares none.</p>
+<p><b>No AI model is used.</b> The app declares no language model and sends nothing to one.</p>
+<p><b>What is stored, and where.</b> The app keeps an index of your pages — page identifiers,
+titles, spaces, versions, and the field names and values it found — inside Forge SQL storage,
+which lives in Atlassian's own infrastructure under your installation. That index is what makes
+the board, the macro and the export possible. Page bodies are read into memory while a page is
+being indexed and are not kept.</p>
+<p><b>What is not stored.</b> No attachments, no credentials, no e-mail addresses beyond those
+you wrote into your own pages and asked the app to report on. The app never builds a profile of
+anyone.</p>
+<p><b>Who can see it.</b> The app acts as the person using it: before anything is shown, it
+checks that person can open the page it came from. We, as the developer, have no way to read your
+data — there is no admin console on our side and no copy anywhere else.</p>
+<p><b>Deletion.</b> Uninstalling the app empties its index immediately, on the way out. Forge
+would otherwise keep an uninstalled app's storage in soft deletion for a while; the app does not
+rely on that, it clears the tables itself.</p>
+<p>Questions about any of this: <a href="mailto:contact@maste.ro">contact@maste.ro</a>.</p>
+
+<h2 id="limits">Limits</h2>
+<ul class="plain">
+  <li><b>No pivot.</b> Grouping by one field and totalling another is supported; two axes at once
+  is not. Two axes stop being a list you can click back out of, and clicking back into the pages
+  is the point of the app.</li>
+  <li><b>The index is a snapshot between passes.</b> Page events keep it close to live, and the
+  hourly pass catches what events miss; a page changed seconds ago may take a moment to appear.</li>
+  <li><b>Not covered in this version:</b> attachments, page restrictions and drafts.</li>
+  <li><b>Writing is one field at a time</b>, always through the preview, always undoable as a
+  whole run.</li>
+</ul>
+
+<h2 id="support">Support</h2>
+<p>Write to <a href="mailto:contact@maste.ro">contact@maste.ro</a> — a problem, a question, or a
+feature you need. The same address is on every failure message in the app, next to a short code.
+Tell us what you were doing, what you saw, and the code if there was one.</p>
+
+</main>
+
+<footer>
+  Field Report · documentation ·
+  <a href="mailto:contact@maste.ro">contact@maste.ro</a>
+</footer>
+
+</div>
+</body>
+</html>
