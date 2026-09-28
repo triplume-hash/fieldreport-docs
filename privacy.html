@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Field Report — privacy policy</title>
+<meta name="description" content="Privacy policy of the Field Report app for Confluence Cloud: what it reads, what it stores, where, and who can see it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+:root{
+  --ground:#E7ECEB; --surface:#F8FAFA; --surface-2:#EEF3F2;
+  --ink:#0D1A1B; --ink-2:#4C6061; --ink-3:#7A8D8D;
+  --rule:#C6D2D1; --rule-strong:#9DAFAE;
+  --accent:#0B6B62; --accent-soft:#D3E5E2;
+  --warn:#846512;
+  --shadow:0 1px 0 rgba(13,26,27,.05), 0 8px 24px -18px rgba(13,26,27,.5);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0A1314; --surface:#111C1D; --surface-2:#162324;
+    --ink:#DDE8E7; --ink-2:#92A6A5; --ink-3:#6A7D7D;
+    --rule:#223435; --rule-strong:#33484A;
+    --accent:#4FC3B2; --accent-soft:#12312E;
+    --warn:#D6AB4A;
+    --shadow:0 1px 0 rgba(0,0,0,.35), 0 8px 24px -18px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0A1314; --surface:#111C1D; --surface-2:#162324;
+  --ink:#DDE8E7; --ink-2:#92A6A5; --ink-3:#6A7D7D;
+  --rule:#223435; --rule-strong:#33484A;
+  --accent:#4FC3B2; --accent-soft:#12312E;
+  --warn:#D6AB4A;
+  --shadow:0 1px 0 rgba(0,0,0,.35), 0 8px 24px -18px rgba(0,0,0,.9);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-size:17px; line-height:1.62;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+.wrap{max-width:960px;margin:0 auto;padding:0 28px}
+.prose{max-width:68ch}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+h1,h2,h3{font-family:"Archivo","Helvetica Neue",Arial,sans-serif;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,4.4vw,46px);line-height:1.1;font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(21px,2.6vw,27px);font-weight:700;letter-spacing:-.01em;margin:56px 0 14px;padding-top:22px;border-top:1px solid var(--rule)}
+h3{font-size:18px;font-weight:600;margin:30px 0 8px}
+p{margin:0 0 14px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+code{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:.88em;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+
+.masthead{border-top:4px solid var(--ink);padding:34px 0 26px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.lede{font-size:19px;color:var(--ink-2);margin-top:16px;max-width:62ch}
+
+nav.toc{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:18px 22px;margin:28px 0 8px;box-shadow:var(--shadow)}
+nav.toc ol{margin:0;padding-left:20px;columns:2;column-gap:32px}
+nav.toc li{margin:3px 0;break-inside:avoid}
+@media (max-width:640px){nav.toc ol{columns:1}}
+
+ul.plain{list-style:none;padding:0;margin:0 0 14px}
+ul.plain li{padding:9px 0 9px 22px;border-bottom:1px solid var(--rule);position:relative}
+ul.plain li:last-child{border-bottom:none}
+ul.plain li::before{content:"";position:absolute;left:2px;top:19px;width:8px;height:1px;background:var(--rule-strong)}
+
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:16px 20px;margin:0 0 12px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 6px}
+.card p{margin:0 0 8px;color:var(--ink-2)}
+.card p:last-child{margin-bottom:0}
+.limit{font-size:15px;color:var(--warn);border-left:2px solid var(--warn);padding-left:12px;margin-top:10px}
+.limit b{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:2px}
+
+table{border-collapse:collapse;width:100%;font-size:15.5px;margin:0 0 14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:"Archivo",sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+td.mono{white-space:nowrap}
+.scroll{overflow-x:auto}
+
+.note{background:var(--accent-soft);border-radius:8px;padding:16px 20px;margin:18px 0}
+.note p:last-child{margin-bottom:0}
+
+footer{margin:64px 0 40px;padding-top:22px;border-top:1px solid var(--rule);color:var(--ink-3);font-size:15px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="eyebrow">Privacy policy · Confluence Cloud</div>
+  <h1>Field Report — privacy policy</h1>
+  <p class="lede">This policy covers the Field Report app for Confluence Cloud, published on the
+  Atlassian Marketplace by Mastero. Last updated: 28 September 2026.</p>
+</header>
+
+<main class="prose">
+<h2 id="data">Where your data goes</h2>
+<p><b>Nothing you have in Confluence leaves Atlassian.</b> The app runs on Atlassian Forge. It
+makes no request to any host outside your Atlassian site, so there is no third party, no
+analytics service and no server of ours that could receive your data. This is enforced by the
+platform, not by our good intentions: a Forge app that egresses data must declare it, and this
+one declares none.</p>
+<p><b>No AI model is used.</b> The app declares no language model and sends nothing to one.</p>
+<p><b>What is stored, and where.</b> The app keeps an index of your pages — page identifiers,
+titles, spaces, versions, and the field names and values it found — inside Forge SQL storage,
+which lives in Atlassian's own infrastructure under your installation. That index is what makes
+the board, the macro and the export possible. Page bodies are read into memory while a page is
+being indexed and are not kept.</p>
+<p><b>What is not stored.</b> No attachments, no credentials, no e-mail addresses beyond those
+you wrote into your own pages and asked the app to report on. The app never builds a profile of
+anyone.</p>
+<p><b>Who can see it.</b> The app acts as the person using it: before anything is shown, it
+checks that person can open the page it came from. We, as the developer, have no way to read your
+data — there is no admin console on our side and no copy anywhere else.</p>
+<p><b>Deletion.</b> Uninstalling the app empties its index immediately, on the way out. Forge
+would otherwise keep an uninstalled app's storage in soft deletion for a while; the app does not
+rely on that, it clears the tables itself.</p>
+
+<h2 id="roles">Our role under data protection law</h2>
+<p>Under the GDPR we act as a <b>data processor</b>, not a data controller: the app processes
+Confluence content only on behalf of your organisation, only inside your Atlassian site, and only
+to show you the reports you asked for. The data it handles is Confluence page and blog post
+content, page and space titles, the field names and values found in them, labels, and page,
+space and Atlassian account identifiers.</p>
+<p>We do not sell personal information, and no personal information is shared with any third
+party. The app keeps no data outside Atlassian, so there is nothing to transfer outside the
+European Economic Area and no separate retention period: the index lives as long as the app is
+installed and is emptied when it is uninstalled.</p>
+
+<h2 id="logs">Logs</h2>
+<p>The app writes operational logs through Forge, which Atlassian stores. They carry identifiers,
+counts and error codes, so that a failure can be traced when you report it. They are not shared
+with anyone outside Atlassian.</p>
+
+<h2 id="contact">Contact</h2>
+<p>Questions about privacy, requests about your data, and reports of security issues:
+<a href="mailto:contact@maste.ro">contact@maste.ro</a>. We answer within 48 hours.</p>
+<p>The rest of the documentation is at <a href="/">fieldreport.maste.ro</a>.</p>
+
+</main>
+
+<footer>
+  Field Report · privacy policy ·
+  <a href="/">documentation</a> ·
+  <a href="mailto:contact@maste.ro">contact@maste.ro</a>
+</footer>
+
+</div>
+</body>
+</html>
